@@ -3,67 +3,83 @@ class ProductManager {
         this.products = [];
     }
 
-    getProducts() {
+    async getProducts() {
         return this.products;
     }
 
-    addProduct(title, description, price, thumbnail, code, stock) {
+    async addProduct(product) {
         const id = this.generateUniqueId();
-        const product = {
-            id,
-            title,
-            description,
-            price,
-            thumbnail,
-            code,
-            stock
-        };
-        this.products.push(product);
+        const newProduct = { id, ...product };
+        this.products.push(newProduct);
+        return newProduct;
+    }
+
+    async getProductById(id) {
+        const product = this.products.find((p) => p.id === id);
+        if (!product) {
+            throw new Error("Producto no encontrado");
+        }
+        return product;
+    }
+
+    async updateProduct(id, updatedFields) {
+        const productIndex = this.products.findIndex((p) => p.id === id);
+        if (productIndex === -1) {
+            throw new Error("Producto no encontrado");
+        }
+        const updatedProduct = { ...this.products[productIndex], ...updatedFields };
+        this.products[productIndex] = updatedProduct;
+        return updatedProduct;
+    }
+
+    async deleteProduct(id) {
+        const productIndex = this.products.findIndex((p) => p.id === id);
+        if (productIndex === -1) {
+            throw new Error("Producto no encontrado");
+        }
+        this.products.splice(productIndex, 1);
     }
 
     generateUniqueId() {
-        return new Date().getTime().toString();
-    }
-
-    getProductById(id) {
-        const product = this.products.find(product => product.id === id);
-        if (product) {
-            return product;
-        } else {
-            throw new Error("Producto no encontrado");
-        }
-    }
-
-    updateProduct(id, updatedFields) {
-        const productIndex = this.products.findIndex(product => product.id === id);
-        if (productIndex !== -1) {
-            this.products[productIndex] = { ...this.products[productIndex], ...updatedFields };
-        } else {
-            throw new Error("Producto no encontrado");
-        }
-    }
-
-    deleteProduct(id) {
-        const productIndex = this.products.findIndex(product => product.id === id);
-        if (productIndex !== -1) {
-            this.products.splice(productIndex, 1);
-        } else {
-            throw new Error("Producto no encontrado");
-        }
+        return Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
     }
 }
 
-const productManager = new ProductManager();
 
+async function main() {
+    const productManager = new ProductManager();
 
-console.log(productManager.getProducts());
+    const newProduct = await productManager.addProduct({
+        title: "producto",
+        description: "zapatilla",
+        price: 500,
+        thumbnail: "S/I",
+        code: "azh123",
+        stock: 30,
+    });
 
-productManager.addProduct("producto prueba", "Este es un producto prueba", 100, "Sin imagen", "AZ5", 30);
+    console.log("Producto agregado:", newProduct);
 
-console.log(productManager.getProducts());
+    const allProducts = await productManager.getProducts();
+    console.log("Todos los productos:", allProducts);
 
-console.log(productManager.getProductById('ID_DEL_PRODUCTO'));
+    const productId = newProduct.id;
+    const productById = await productManager.getProductById(productId);
+    console.log("Producto por ID:", productById);
 
-productManager.updateProduct('ID_DEL_PRODUCTO', { price: 150 });
+    const updatedProduct = await productManager.updateProduct(productId, {
+        description: "Actualización de la descripción",
+        price: 250,
+    });
+    console.log("Producto actualizado:", updatedProduct);
 
-productManager.deleteProduct('ID_DEL_PRODUCTO');
+    await productManager.deleteProduct(productId);
+    console.log("Producto eliminado");
+
+    const productsAfterDelete = await productManager.getProducts();
+    console.log("Productos después de eliminar:", productsAfterDelete);
+}
+
+main().catch((error) => {
+    console.error(error);
+});
