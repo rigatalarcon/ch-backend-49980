@@ -1,0 +1,13 @@
+{
+  "type":"module",
+  "name": "clase5",
+  "version": "1.0.0",
+  "description": "",
+  "main": "servidorHttp.js",
+  "scripts": {},
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
