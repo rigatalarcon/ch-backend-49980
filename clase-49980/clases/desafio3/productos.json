@@ -1,0 +1,53 @@
+[
+  {
+    "id": 1,
+    "nombre":"zapatillas",
+    "stock": 1 
+  },
+  {
+    "id": 2,
+    "nombre": "botines",
+    "stock": 1 
+  },
+  {
+    "id": 3,
+    "nombre": "pelotas",
+    "stock": 1 
+  },
+  {
+    "id": 4,
+    "nombre": "raquetas",
+    "stock": 1 
+  },
+  {
+    "id": 5,
+    "nombre": "paletas padel",
+    "stock": 1 
+  },
+  {
+    "id": 6,
+    "nombre": "remeras",
+    "stock": 1 
+  },
+  {
+    "id": 7,
+    "nombre": "pantalones",
+    "stock": 1 
+  },
+  {
+    "id": 8,
+    "nombre": "pelotas tenis",
+    "stock": 1 
+  },
+  {
+    "id": 9,
+    "nombre": "bolsos",
+    "stock": 1 
+  },
+  {
+    "id": 10,
+    "nombre": "mochilas",
+    "stock": 1 
+  }
+  
+]
