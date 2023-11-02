@@ -5,9 +5,11 @@ export class ProductManager {
         this.ruta = ruta
     }
 
-    async getALL() {
+    async getALL(query ={}) {
         const json = await fs.readFile(this.ruta, 'utf-8')
-        return JSON.parse(json)
+        if (query.nombre) {
+        return JSON.parse(json).filter(n => n.nombre === query.nombre)
+        }
     }
     async getById(id) {
         const json = await fs.readFile(this.ruta, 'utf-8')

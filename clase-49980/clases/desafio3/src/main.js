@@ -34,6 +34,6 @@ app.get('../productos/:id', async (req, res) => {
     }
 })
 
-app.listen(PORT, ()=>{
+app.listen(PORT, ()=> {
     console.log(`conectado y escuchando puerto ${PORT}`)
 })
